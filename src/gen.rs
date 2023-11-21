@@ -25,7 +25,7 @@ pub enum ParseError {
 pub fn generate_random_csv(writer: File, row_count: u32, columns: Vec<GenType>) -> Result<(), io::Error> {
     const CHARSET: &[u8] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZ\
                             abcdefghijklmnopqrstuvwxyz\
-                            0123456789)(*&^%$#@!~";
+                            !?";
     let mut buf_writer = BufWriter::new(writer);
     let mut rng = rand::thread_rng();
 
