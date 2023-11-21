@@ -1,6 +1,6 @@
-use std::{io::{BufWriter, Write, self}, fs::File, time::{UNIX_EPOCH, Duration}};
+use std::{io::{BufWriter, Write, self}, fs::File};
 
-use chrono::{Utc, DateTime, NaiveDateTime};
+use chrono::NaiveDateTime;
 use rand::{Rng, rngs::ThreadRng};
 use regex::Regex;
 
