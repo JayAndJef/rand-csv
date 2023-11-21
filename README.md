@@ -1,6 +1,6 @@
 # RandCSV
 
-A :sparkles: :fire: :zap: blazingly fast :zap: :fire: :sparkles: random csv generator.
+A :sparkles: :fire: :zap: blazingly fast :zap: :fire: :sparkles: random csv generator written in rust with ChaCha12.
 
 ## Installation
 
