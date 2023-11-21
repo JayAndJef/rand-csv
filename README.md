@@ -30,9 +30,9 @@ Custom ranges are allowed for integers, doubles, and string in the syntax `<type
 
 The command
 ```sh
-rand-csv i-50:100 l0:1 s10:10 d t dt --output-file foo.txt --row-count 5
+rand-csv i-50:100 l0:1 s10:10 d t dt --output-file foo.csv --row-count 5
 ```
-Would generate the file `foo.txt` with the contents
+Might generate the file `foo.csv` with the contents
 ```
 93,0.042452890167961284,zqfqGIwvBur,31/05/2006,09:09,25/11/2053 09:43
 69,0.6314582506910379,NUiIXdDrNvg,21/08/1983,18:40,05/11/1987 16:55
