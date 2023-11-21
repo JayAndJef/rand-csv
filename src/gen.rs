@@ -28,21 +28,26 @@ pub fn generate_random_csv(writer: File, row_count: u32, columns: Vec<GenType>) 
                             !?";
     let mut buf_writer = BufWriter::new(writer);
     let mut rng = rand::thread_rng();
+    let column_count = columns.len();
 
     for _ in 1..=row_count {
-        for column_type in &columns {
+        for (index, column_type) in columns.iter().enumerate() {
             match *column_type {
-                GenType::Int(s, e) => write!(buf_writer, "{},", rng.gen_range(s..=e))?,
-                GenType::String(s, e) => write!(buf_writer, "{},", (0..=rng.gen_range(s..=e)).map(|_| { 
+                GenType::Int(s, e) => write!(buf_writer, "{}", rng.gen_range(s..=e))?,
+                GenType::String(s, e) => write!(buf_writer, "{}", (0..=rng.gen_range(s..=e)).map(|_| { 
                     let idx = rng.gen_range(0..CHARSET.len());
                     CHARSET[idx] as char
                 })
                 .collect::<String>())?,
-                GenType::Double(s, e) => write!(buf_writer, "{},", rng.gen_range(s..=e))?,
-                GenType::Date => write!(buf_writer, "{},", generate_random_date(&mut rng).format("%d/%m/%Y"))?,
-                GenType::Time => write!(buf_writer, "{},", generate_random_date(&mut rng).format("%H:%M"))?,
-                GenType::DateTime => write!(buf_writer, "{},", generate_random_date(&mut rng).format("%d/%m/%Y %H:%M"))?,
+                GenType::Double(s, e) => write!(buf_writer, "{}", rng.gen_range(s..=e))?,
+                GenType::Date => write!(buf_writer, "{}", generate_random_date(&mut rng).format("%d/%m/%Y"))?,
+                GenType::Time => write!(buf_writer, "{}", generate_random_date(&mut rng).format("%H:%M"))?,
+                GenType::DateTime => write!(buf_writer, "{}", generate_random_date(&mut rng).format("%d/%m/%Y %H:%M"))?,
             };
+            if index + 1 != column_count {
+                write!(buf_writer, ",")?;
+            }
+            
         }
         writeln!(buf_writer)?;
     }
