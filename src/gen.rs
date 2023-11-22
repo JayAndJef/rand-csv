@@ -67,7 +67,7 @@ pub fn parse_args(columns: Vec<String>) -> Result<Vec<GenType>, ParseError> {
     for dtype in columns {
         let Some(parsed) = re.captures(&dtype) else { return Err(ParseError::InvalidSyntaxError); };
 
-        match &parsed[1] {
+        built_columns.push(match &parsed[1] {
             "s" => {
                 if let (Some(start), Some(end)) = (parsed.get(2), parsed.get(3)) {
                     let start = start.as_str().parse::<u32>().map_err(|_| ParseError::ParseIntError)?;
@@ -75,9 +75,9 @@ pub fn parse_args(columns: Vec<String>) -> Result<Vec<GenType>, ParseError> {
                     if start > end {
                         return Err(ParseError::InvalidRangeError);
                     }
-                    built_columns.push(GenType::String(start, end))
+                    GenType::String(start, end)
                 } else {
-                    built_columns.push(GenType::String(1, 100))
+                    GenType::String(1, 100)
                 }
             },
             "i" => {
@@ -87,9 +87,9 @@ pub fn parse_args(columns: Vec<String>) -> Result<Vec<GenType>, ParseError> {
                     if start > end {
                         return Err(ParseError::InvalidRangeError);
                     }
-                    built_columns.push(GenType::Int(start, end))
+                    GenType::Int(start, end)
                 } else {
-                    built_columns.push(GenType::Int(0, 100))
+                    GenType::Int(0, 100)
                 }
             },
             "l" => {
@@ -99,16 +99,16 @@ pub fn parse_args(columns: Vec<String>) -> Result<Vec<GenType>, ParseError> {
                     if start > end {
                         return Err(ParseError::InvalidRangeError);
                     }
-                    built_columns.push(GenType::Double(start, end))
+                    GenType::Double(start, end)
                 } else {
-                    built_columns.push(GenType::Double(0.0, 100.0))
+                    GenType::Double(0.0, 100.0)
                 }
             },
-            "d" => built_columns.push(GenType::Date),
-            "t" => built_columns.push(GenType::Time),
-            "dt" => built_columns.push(GenType::DateTime),
+            "d" => GenType::Date,
+            "t" => GenType::Time,
+            "dt" => GenType::DateTime,
             &_ => return Err(ParseError::InvalidSyntaxError)
-        }
+        })
     }
     
     Ok(built_columns)
